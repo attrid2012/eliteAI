@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Register | Elite AI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      color: white;
+      background: #030712;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+
+      background:
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(37, 99, 235, .35),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 80% 80%,
+          rgba(124, 58, 237, .35),
+          transparent 35%
+        );
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 30px;
+    }
+
+    .logo span {
+      color: #60a5fa;
+    }
+
+    .card {
+      padding: 35px;
+      border-radius: 25px;
+
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+
+      backdrop-filter: blur(20px);
+
+      box-shadow:
+        0 25px 80px rgba(0,0,0,.35);
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #9ca9bf;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+
+      border-radius: 12px;
+
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.05);
+
+      color: white;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,.1);
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+
+      padding: 15px;
+
+      border: none;
+      border-radius: 12px;
+
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      background:
+        linear-gradient(
+          90deg,
+          #2563eb,
+          #4f46e5,
+          #7c3aed
+        );
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: #f87171;
+    }
+
+    .bottom {
+      margin-top: 25px;
+      text-align: center;
+      color: #9ca9bf;
+      font-size: 14px;
+    }
+
+    .bottom a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+
+    .home {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+
+      color: #64748b;
+      text-decoration: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">
+      ELITE<span>AI</span>
+    </div>
+
+    <div class="card">
+
+      <h1>Create your account</h1>
+
+      <p class="subtitle">
+        Create your Elite AI account and start using
+        your AI workspace.
+      </p>
+
+      <form id="registerForm">
+
+        <label for="name">
+          Full name
+        </label>
+
+        <input
+          id="name"
+          type="text"
+          placeholder="Your name"
+          required
+        >
+
+
+        <label for="email">
+          Email address
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          required
+        >
+
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="At least 6 characters"
+          minlength="6"
+          required
+        >
+
+
+        <button id="registerButton" type="submit">
+          Create Account
+        </button>
+
+      </form>
+
+      <div id="message" class="message"></div>
+
+      <div class="bottom">
+        Already have an account?
+        <a href="login.html">Login</a>
+      </div>
+
+    </div>
+
+    <a href="index.html" class="home">
+      ← Back to Elite AI
+    </a>
+
+  </div>
+
+</body>
+
+</html>
