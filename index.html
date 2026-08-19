@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Elite AI</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      color: white;
+      background: #030712;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(
+          circle at 15% 20%,
+          rgba(37, 99, 235, 0.35),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 85% 75%,
+          rgba(124, 58, 237, 0.35),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #020617,
+          #07132e,
+          #0b0730
+        );
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(
+          rgba(255,255,255,0.02) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,0.02) 1px,
+          transparent 1px
+        );
+      background-size: 50px 50px;
+      mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent
+      );
+    }
+
+    nav {
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 25px 30px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #60a5fa;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .nav-button {
+      color: white;
+      text-decoration: none;
+      padding: 11px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      transition: 0.25s;
+    }
+
+    .nav-button:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+
+    .register {
+      background: #2563eb;
+      border-color: #2563eb;
+    }
+
+    .register:hover {
+      background: #3b82f6;
+    }
+
+    .hero {
+      max-width: 1000px;
+      margin: auto;
+      min-height: 650px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+      padding: 60px 25px;
+    }
+
+    .badge {
+      color: #93c5fd;
+      border: 1px solid rgba(96,165,250,0.25);
+      background: rgba(59,130,246,0.08);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-top: 30px;
+      font-size: clamp(55px, 10vw, 100px);
+      line-height: 1;
+      letter-spacing: -5px;
+      font-weight: 800;
+    }
+
+    h1 span {
+      background: linear-gradient(
+        90deg,
+        #60a5fa,
+        #818cf8,
+        #a78bfa
+      );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .description {
+      max-width: 700px;
+      margin-top: 30px;
+
+      color: #b8c2d6;
+      font-size: 19px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      margin-top: 40px;
+
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .main-button {
+      text-decoration: none;
+      color: white;
+
+      padding: 16px 30px;
+      border-radius: 15px;
+
+      font-weight: 700;
+      font-size: 16px;
+
+      background: linear-gradient(
+        90deg,
+        #2563eb,
+        #4f46e5,
+        #7c3aed
+      );
+
+      box-shadow:
+        0 15px 50px rgba(37,99,235,0.25);
+
+      transition: 0.25s;
+    }
+
+    .main-button:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 20px 60px rgba(99,102,241,0.35);
+    }
+
+    .secondary-button {
+      text-decoration: none;
+      color: white;
+
+      padding: 16px 30px;
+      border-radius: 15px;
+
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+
+      transition: 0.25s;
+    }
+
+    .secondary-button:hover {
+      background: rgba(255,255,255,0.09);
+    }
+
+    .features {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px 25px 100px;
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      padding: 30px;
+      border-radius: 22px;
+
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.035);
+
+      backdrop-filter: blur(15px);
+    }
+
+    .feature h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .feature p {
+      color: #9ca9bf;
+      line-height: 1.6;
+    }
+
+    .pricing {
+      max-width: 700px;
+      margin: 0 auto 100px;
+      padding: 45px 30px;
+
+      text-align: center;
+
+      border-radius: 28px;
+      border: 1px solid rgba(96,165,250,0.2);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(37,99,235,0.12),
+          rgba(124,58,237,0.12)
+        );
+
+      backdrop-filter: blur(20px);
+    }
+
+    .pricing p {
+      color: #aab5c8;
+      margin-top: 10px;
+    }
+
+    .price {
+      margin-top: 15px;
+      font-size: 55px;
+      font-weight: 800;
+    }
+
+    .price small {
+      font-size: 18px;
+      color: #9ca9bf;
+      font-weight: normal;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #667085;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    @media (max-width: 750px) {
+
+      .nav-buttons {
+        gap: 6px;
+      }
+
+      .nav-button {
+        padding: 9px 12px;
+        font-size: 13px;
+      }
+
+      h1 {
+        letter-spacing: -3px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .description {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+
+    <div class="logo">
+      ELITE<span>AI</span>
+    </div>
+
+    <div class="nav-buttons">
+
+      <a href="login.html" class="nav-button">
+        Login
+      </a>
+
+      <a href="register.html" class="nav-button register">
+        Register
+      </a>
+
+    </div>
+
+  </nav>
+
+
+  <section class="hero">
+
+    <div class="badge">
+      Intelligent AI Workspace
+    </div>
+
+    <h1>
+      Elite <span>AI</span>
+    </h1>
+
+    <p class="description">
+      One intelligent workspace for conversations,
+      research, files, images and creative AI.
+    </p>
+
+    <div class="hero-buttons">
+
+      <a href="register.html" class="main-button">
+        Start with Elite AI
+      </a>
+
+      <a href="#pricing" class="secondary-button">
+        View Pricing
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <section class="features">
+
+    <div class="feature">
+      <h3>AI Assistant</h3>
+      <p>
+        Ask questions, solve problems and work
+        with an intelligent AI assistant.
+      </p>
+    </div>
+
+    <div class="feature">
+      <h3>Creative AI</h3>
+      <p>
+        Create images and access advanced
+        AI-powered creative tools.
+      </p>
+    </div>
+
+    <div class="feature">
+      <h3>Your Workspace</h3>
+      <p>
+        Keep your conversations and recent
+        searches organized in one place.
+      </p>
+    </div>
+
+  </section>
+
+
+  <section class="pricing" id="pricing">
+
+    <p>Elite AI Premium</p>
+
+    <div class="price">
+      ₹4,999
+      <small>/ 3 months</small>
+    </div>
+
+    <p>
+      Advanced AI access with premium features.
+    </p>
+
+    <div class="hero-buttons">
+
+      <a href="register.html" class="main-button">
+        Get Premium
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+    © 2026 Elite AI. All rights reserved.
+  </footer>
+
+</body>
+</html>
