@@ -251,7 +251,157 @@
     </a>
 
   </div>
+<script type="module">
 
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+  // YOUR FIREBASE CONFIGURATION
+  const firebaseConfig = {
+    apiKey: "AIzaSyDe32q2gPMSh0ARyx8QuXuC93YroTy5NqI",
+    authDomain: "eliteai-by-attri.firebaseapp.com",
+    projectId: "eliteai-by-attri",
+    storageBucket: "eliteai-by-attri.firebasestorage.app",
+    messagingSenderId: "876920924035",
+    appId: "1:876920924035:web:be1e3cbfefe227d6ddb8b6"
+   };
+
+
+  const app = initializeApp(firebaseConfig);
+
+  const auth = getAuth(app);
+
+  const db = getFirestore(app);
+
+
+  const form = document.getElementById("registerForm");
+
+  const button = document.getElementById("registerButton");
+
+  const message = document.getElementById("message");
+
+
+  form.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    const name =
+      document.getElementById("name").value.trim();
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+
+    button.disabled = true;
+
+    button.textContent = "Creating account...";
+
+    message.textContent = "";
+
+
+    try {
+
+      const userCredential =
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+
+      const user = userCredential.user;
+
+
+      await updateProfile(user, {
+        displayName: name
+      });
+
+
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          email: email,
+          displayName: name,
+          avatarUrl: "",
+          role: "user",
+          plan: "free",
+          subscriptionStatus: "inactive",
+          dailySearches: 0,
+          dailyImages: 0,
+          createdAt: serverTimestamp()
+        }
+      );
+
+
+      message.style.color = "#4ade80";
+
+      message.textContent =
+        "Account created successfully!";
+
+
+      setTimeout(() => {
+
+        window.location.href =
+          "dashboard.html";
+
+      }, 1000);
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.style.color = "#f87171";
+
+      if (error.code === "auth/email-already-in-use") {
+
+        message.textContent =
+          "This email is already registered.";
+
+      } else if (error.code === "auth/invalid-email") {
+
+        message.textContent =
+          "Please enter a valid email.";
+
+      } else if (error.code === "auth/weak-password") {
+
+        message.textContent =
+          "Password must be at least 6 characters.";
+
+      } else {
+
+        message.textContent =
+          "Something went wrong. Please try again.";
+
+      }
+
+    }
+
+
+    button.disabled = false;
+
+    button.textContent = "Create Account";
+
+  });
+
+</script>
 </body>
 
 </html>
